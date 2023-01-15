@@ -38,10 +38,6 @@ U8.  As a GameBoard user, I want to be able to compare my win/loss ratio for the
 U9.
 
 
-
-
-
-
 ## 4. Project Scope
 
 
