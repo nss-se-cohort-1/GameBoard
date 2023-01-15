@@ -69,29 +69,29 @@ I will be using tables in DynamoDB to store the player, group, game, and gameOut
 
 ```
 // PlayerModel
-String playerName
 String playerId
+String playerName
 Set<String> groups
 
 // GroupModel
-String groupName
 String groupId
-Set<String> playersInGroup
-Set<String> games
+String groupName
+Set<String> gameIds
+Set<String> gameOutcomeIds
+Set<String> playerIds
 
 // GameModel
-String playerId
+String gameId
 String gameName
+String rulesLink
 String purchaseLink
-boolean isShown
 
 // GameOutcomeModel
 String gameOutcomeId
 String groupId
-String  gameId
-Set<String> playersLosers
-ZoneDateTime date
-Boolean isShown
+String gameId
+String playerWinId
+Set<String> playerLoseIds
 
 ```
 
@@ -173,19 +173,19 @@ Boolean isShown
 
 ## 7.1 Players
 ```
-playerName // string
 playerId // number
-groups // set string
+playerName // string
+groupIds // set string
 
 ```
 
 ## 7.2 Groups
 ```
-groupName // string
 groupId // number
-players // set string
-games // set string
-isShown // boolean
+groupName // string
+playerIds // set string
+gameIds // set string
+gameOutcomeIds // set string
 ```
 
 ## 7.3 Games
@@ -194,7 +194,6 @@ gameId // number
 gameName // string
 gameRules // string
 purchaseLink // string
-isShown // boolean
 ```
 
 ## 7.4 GameOutcomes
@@ -204,8 +203,6 @@ groupId // number
 gameId // number
 playerWin // set string
 playersLosers // set string
-date // string
-isShown // boolean
 ```
 
 # 8. Pages

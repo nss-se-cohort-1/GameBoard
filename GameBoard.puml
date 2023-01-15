@@ -1,11 +1,71 @@
 @startuml
-'https://plantuml.com/sequence-diagram
 
-autonumber
+Player -- PlayerDao
+Group -- GroupDao
+Game -- GameDao
+GameOutcome --  GameOutcomeDao
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+class Player {
+String playerId
+String playerName
+List<Groups> groups
+}
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+class Group {
+String groupId
+String groupName
+List<Player> players
+List<Games> games
+List<GameOutcome> gameOutcomes
+}
+
+class Game {
+String gameId
+String gameName
+String rulesLink
+String purchaseLink
+}
+
+class GameOutcome {
+String gameOutcomeId
+String gameId
+String groupId
+String playerWinsId
+List<String> playerLoseIds
+}
+
+class PlayerDao {
+DynamoDbMapper mapper
+MetricsPublisher metrics
+getPlayerActivity() : Player
+createPlayerActivity() : Player
+updatePlayerActivity() : Player
+}
+
+class GroupDao {
+DynamoDbMapper mapper
+MetricsPublisher metrics
+getGroupActivity() : Group
+createGroupActivity() : Group
+updateGroupActivity() : Group
+}
+
+class GameDao {
+DynamoDbMapper mapper
+MetricsPublisher metrics
+getGameActivity() : Game
+createGameActivity() : Game
+updateGameActivity() : Game
+}
+
+class GameOutcomeDao {
+DynamoDbMapper mapper
+MetricsPublisher metrics
+getGameOutcomeActivity() : GameOutcome
+createGameOutcomeActivity() : GameOutcome
+updateGameOutcomeActivity() : GameOutcome
+}
+
+
+
 @enduml
