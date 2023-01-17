@@ -14,8 +14,10 @@ Finally users can add or remove players from the group.
 
 ## 2. Top Questions to Resolve in Review
 
-1. How can I optimize my database structuring?
-2. 
+1. How can I reduce the amount of api requests being made?  Caching?
+2. Can I organize the data in my tables more efficiently?  If so, how?
+3. Is there a better design for my GSI?  How can I utitilize GSI's more efficiently?
+
 
 ## 3. Use Cases
 
@@ -35,9 +37,6 @@ U7.  As a GameBoard user, I want to be able to see the wins and loses of the oth
 
 U8.  As a GameBoard user, I want to be able to compare my win/loss ratio for the same game across multiple groups.
 
-U9.
-
-
 ## 4. Project Scope
 
 
@@ -51,6 +50,7 @@ U9.
 
 ### 4.2. Out of Scope
 * Comparing a user's win/loss ratio for specific games across multiple groups.
+* Allow users to add their new games to the database.
 
 # 5. Proposed Architecture Overview
 This initial iteration will provide the minimum lovable product (MLP) including the ability to form groups with other users and keep track of individual users wins and losses within the group.
@@ -173,7 +173,7 @@ Set<String> playerLoseIds
 
 ## 7.1 Players
 ```
-playerId // number
+playerId // string, partitionKey
 playerName // string
 groupIds // set string
 
@@ -181,7 +181,7 @@ groupIds // set string
 
 ## 7.2 Groups
 ```
-groupId // number
+groupId // string, partitionKey
 groupName // string
 playerIds // set string
 gameIds // set string
@@ -190,7 +190,7 @@ gameOutcomeIds // set string
 
 ## 7.3 Games
 ```
-gameId // number
+gameId // number, partitionKey
 gameName // string
 gameRules // string
 purchaseLink // string
@@ -198,14 +198,24 @@ purchaseLink // string
 
 ## 7.4 GameOutcomes
 ```
-gameName // string
-groupId // number
-gameId // number
+gameOutcomeId // string, partitionKey
+groupId // string, sortKey
+gameId // string
 playerWin // set string
 playersLosers // set string
 ```
 
+## 7.4 GameOutcomes outcomesByGame GSI
+```
+gameOutcomeId // string, partitionKey
+groupId // string
+gameId // string, sortKey
+playerWin // set string
+playersLosers // set string
+```
+
+
 # 8. Pages
 
-See figma link for mock ups
+See figma link for a flow board.
 https://www.figma.com/file/PYOTTLM2QGxdPn4sze4gON/GameBoard-rough-draft-flowboard?node-id=0%3A1&t=2A8Sp3rgwfxVbqPd-0
